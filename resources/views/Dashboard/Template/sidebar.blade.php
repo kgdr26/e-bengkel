@@ -36,11 +36,11 @@
                     </a>
                     <div id="navsparepart" class="collapse @if (Route::currentRouteName()=='categorypart' || Route::currentRouteName()=='listpart') show @endif" data-bs-parent="#sideNavbar">
                         <ul class="nav flex-column">
-                            <li class="nav-item ">
+                            {{-- <li class="nav-item ">
                                 <a class="nav-link @if (Route::currentRouteName()=='categorypart') active @endif" href="{{route('categorypart')}}">
                                     Kategory
                                 </a>
-                            </li>
+                            </li> --}}
                             <!-- Nav item -->
                             <li class="nav-item ">
                                 <a class="nav-link @if (Route::currentRouteName()=='listpart') active @endif" href="{{route('listpart')}}">
@@ -116,11 +116,11 @@
                     </a>
                     <div id="navsparepart" class="collapse @if (Route::currentRouteName()=='categorypart' || Route::currentRouteName()=='listpart') show @endif" data-bs-parent="#sideNavbar">
                         <ul class="nav flex-column">
-                            <li class="nav-item ">
+                            {{-- <li class="nav-item ">
                                 <a class="nav-link @if (Route::currentRouteName()=='categorypart') active @endif" href="{{route('categorypart')}}">
                                     Kategory
                                 </a>
-                            </li>
+                            </li> --}}
                             <!-- Nav item -->
                             <li class="nav-item ">
                                 <a class="nav-link @if (Route::currentRouteName()=='listpart') active @endif" href="{{route('listpart')}}">

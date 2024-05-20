@@ -41,7 +41,6 @@
                                     <th>Keperluan</th>
                                     <th>Date Booking</th>
                                     <th>Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,25 +68,6 @@
                                             @else
                                                 <span class="badge bg-light-warning text-dark-warning">Booking</span>
                                             @endif
-                                        </td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <a href="#" class="text-reset" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="feather-icon icon-more-vertical fs-5"></i>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <button type="button" class="dropdown-item" data-name="delete" data-item="{{$value->id}}">
-                                                            <i class="bi bi-trash me-3"></i>Delete
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <button type="button" class="dropdown-item" data-name="edit" data-item="{{$value->id}}">
-                                                            <i class="bi bi-pencil-square me-3 "></i>Edit
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

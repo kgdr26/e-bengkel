@@ -40,7 +40,6 @@
                                     <th>Image</th>
                                     <th>Kode Part</th>
                                     <th>Name</th>
-                                    <th>Category</th>
                                     <th>Price</th>
                                     <th>Stock</th>
                                     <th>Support</th>
@@ -61,7 +60,6 @@
                                         </td>
                                         <td>{{$val->kode_part}}</td>
                                         <td>{{$val->name}}</td>
-                                        <td>{{$val->cat_name}}</td>
                                         <td>Rp. {{number_format($val->price, 0, ',', '.')}}</td>
                                         <td>{{$val->stock}}</td>
                                         <td>
@@ -122,7 +120,7 @@
                                 <label for="" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="" placeholder="Name" data-name="name">
                             </div>
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="" class="form-label">Category</label>
                                 <select data-name="id_category" class="form-select select-2-add">
                                     <option value="">-- Select Category --</option>
@@ -130,7 +128,7 @@
                                         <option value="{{$value->id}}">{{$value->name}}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="mb-3">
                                 <label for="" class="form-label">Price</label>
                                 <input type="number" class="form-control" id="" placeholder="Price" data-name="price">
@@ -189,7 +187,7 @@
                                 <label for="" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="" placeholder="Name" data-name="edit_name">
                             </div>
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="" class="form-label">Category</label>
                                 <select data-name="edit_id_category" class="form-select select-2-edit">
                                     <option value="">-- Select Category --</option>
@@ -197,7 +195,7 @@
                                         <option value="{{$value->id}}">{{$value->name}}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="mb-3">
                                 <label for="" class="form-label">Price</label>
                                 <input type="number" class="form-control" id="" placeholder="Price" data-name="edit_price">
@@ -331,23 +329,23 @@
 
 {{-- JS Add Data --}}
 <script>
-    var scntDiv     = $("#frm_scents");
-    var i           = $("#p_scents").length + 1;
-    var forminput   = '<div class="input-group mb-3" id="remove_option"><input type="text" class="form-control" data-name="option_support[]"><span class="input-group-text btn btn-danger" id="basic-addon2" onclick="removeCont(this);"><i class="bi bi-dash-circle-fill"></i></span></div>';
+    var scntDivadd     = $("#frm_scents");
+    var iadd           = $("#p_scents").length + 1;
+    var forminputadd   = '<div class="input-group mb-3" id="remove_option"><input type="text" class="form-control" data-name="option_support[]"><span class="input-group-text btn btn-danger" id="basic-addon2" onclick="removeCont(this);"><i class="bi bi-dash-circle-fill"></i></span></div>';
 
     $(function() {
         $("[data-name='add_option_add']").click(function() {
-            $(forminput).appendTo(scntDiv);
-            i++;
+            $(forminputadd).appendTo(scntDivadd);
+            iadd++;
             return false;
         });
     });
 
     function removeCont(_this) {
         // console.log(_this)
-        if (i > 1) {
+        if (iadd > 1) {
             $(_this).parent().remove();
-            i--;
+            iadd--;
         }
     }
 </script>
@@ -356,7 +354,6 @@
     $(document).on("click", "[data-name='add']", function (e) {
         $("[data-name='kode_part']").val('');
         $("[data-name='name']").val('');
-        $("[data-name='id_category']").val('').trigger("change");
         $("[data-name='price']").val('');
         $("[data-name='stock']").val('');
         $("[data-name='support_by']").val('');
@@ -379,7 +376,7 @@
     $(document).on("click", "[data-name='save_add']", function (e) {
         var kode_part   = $("[data-name='kode_part']").val();
         var name        = $("[data-name='name']").val();
-        var id_category = $("[data-name='id_category']").val();
+        var id_category = '5';
         var price       = $("[data-name='price']").val();
         var stock       = $("[data-name='stock']").val();
         var support_by  = '['+$("[data-name='support_by']").val()+']';
@@ -496,7 +493,6 @@
                 $("[data-name='edit_id']").val(data['data'].id);
                 $("[data-name='edit_kode_part']").val(data['data'].kode_part);
                 $("[data-name='edit_name']").val(data['data'].name);
-                $("[data-name='edit_id_category']").val(data['data'].id_category).trigger("change");
                 $("[data-name='edit_price']").val(data['data'].price);
                 $("[data-name='edit_stock']").val(data['data'].stock);
                 var spprt       = data['data'].support_by;
@@ -564,7 +560,7 @@
     $(document).on("click", "[data-name='save_edit']", function (e) {
         var kode_part   = $("[data-name='edit_kode_part']").val();
         var name        = $("[data-name='edit_name']").val();
-        var id_category = $("[data-name='edit_id_category']").val();
+        var id_category = '5';
         var price       = $("[data-name='edit_price']").val();
         var stock       = $("[data-name='edit_stock']").val();
         var support_by  = '['+$("[data-name='edit_support_by']").val()+']';

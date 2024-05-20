@@ -19,7 +19,7 @@
                 </div>
                 <!-- button -->
                 <div>
-                    <button type="button" class="btn btn-primary">Scan QR</button>
+                    <button type="button" class="btn btn-primary" data-name="submit_kode_booking">Submit Kode Booking</button>
                 </div>
 
             </div>
@@ -33,14 +33,8 @@
                 <div class="card-body p-6">
                     <div class="d-md-flex justify-content-between">
                         <div class="d-flex align-items-center mb-2 mb-md-0">
-                            <h2 class="mb-0">Booking ID: #FC001</h2>
+                            <h2 class="mb-0">Booking ID: -</h2>
                             <span class="badge bg-light-warning text-dark-warning ms-2">Pending</span>
-                        </div>
-                        <!-- select option -->
-                        <div class="d-md-flex">
-                            <div class="ms-md-3">
-                                <button type="button" class="btn btn-secondary">Add Ordering</button>
-                            </div>
                         </div>
                     </div>
                     <div class="mt-8">
@@ -50,9 +44,9 @@
                                 <div class="mb-6">
                                     <h6>Customer Details</h6>
                                     <p class="mb-1 lh-lg">
-                                        John Alex<br>
-                                        anderalex@example.com<br>
-                                        +998 99 22123456
+                                        Name : <span class="text-dark">-</span><br>
+                                        No Tlp : <span class="text-dark">-</span><br>
+                                        Nopol : <span class="text-dark">-</span>
                                     </p>
                                 </div>
                             </div>
@@ -60,19 +54,18 @@
                             <div class="col-lg-4 col-md-4 col-12">
                                 <div class="mb-6">
                                     <h6>Keperluan</h6>
-                                    <p class="mb-1 lh-lg">Gerg Harvell<br>
-                                        568, Suite Ave.<br>
-                                        Austrlia, 235153 <br>
-                                        Contact No. +91 99999 12345</p>
+                                    <p class="mb-1 lh-lg">-</p>
                                 </div>
                             </div>
                             <!-- address -->
                             <div class="col-lg-4 col-md-4 col-12">
                                 <div class="mb-6">
                                     <h6>Order Details</h6>
-                                    <p class="mb-1 lh-lg">Order ID: <span class="text-dark">FC001</span><br>
-                                        Order Date: <span class="text-dark">October 22, 2023</span><br>
-                                        Order Total: <span class="text-dark">$734.28</span></p>
+                                    <p class="mb-1 lh-lg">
+                                        Code Booking : <span class="text-dark">-</span><br>
+                                        Date Booking : <span class="text-dark">-</span><br>
+                                        Date Create Booking : <span class="text-dark">-</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -99,14 +92,12 @@
                                             <a href="#" class="text-inherit">
                                                 <div class="d-flex align-items-center">
                                                     <div>
-                                                        <img src="../assets/images/products/product-img-1.jpg" alt=""
-                                                            class="icon-shape icon-lg">
+                                                        <img src="{{asset('assets/images/products/default.png')}}" alt=""  class="icon-shape icon-lg">
                                                     </div>
                                                     <div class="ms-lg-4 mt-2 mt-lg-0">
                                                         <h5 class="mb-0 h6">
-                                                            Haldiram's Sev Bhujia
+                                                            Services
                                                         </h5>
-
                                                     </div>
                                                 </div>
                                             </a>
@@ -130,55 +121,17 @@
                                     <tr>
                                         <td class="border-bottom-0 pb-0"></td>
                                         <td class="border-bottom-0 pb-0"></td>
-                                        <td colspan="1" class="fw-medium text-dark ">
-                                            <!-- text -->
-                                            Shipping Cost
-                                        </td>
-                                        <td class="fw-medium text-dark  ">
-                                            <!-- text -->
-                                            $10.00
+                                        <td colspan="2" class="fw-medium text-dark text-end">
+                                            <button type="button" class="btn btn-success" data-name="">Save And Confirmation</button>
                                         </td>
                                     </tr>
-
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td colspan="1" class="fw-semi-bold text-dark ">
-                                            <!-- text -->
-                                            Grand Total
-                                        </td>
-                                        <td class="fw-semi-bold text-dark ">
-                                            <!-- text -->
-                                            $90.00
-                                        </td>
-                                    </tr>
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div class="card-body p-6">
-                    <div class="row">
-                        <div class="col-md-6 mb-4 mb-lg-0">
-                            <h6>Payment Info</h6>
-                            <span>Cash on Delivery</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>Notes</h5>
-                            <textarea class="form-control mb-3" rows="3" placeholder="Write note for order"></textarea>
-                            <a href="#" class="btn btn-primary">Save Notes</a>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
             </div>
-
         </div>
-
     </div>
 </div>
 

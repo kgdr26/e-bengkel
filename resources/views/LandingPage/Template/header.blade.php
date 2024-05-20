@@ -303,6 +303,10 @@
                                     <td id="kd_tlp">: -</td>
                                 </tr>
                                 <tr>
+                                    <td>No Polisi</td>
+                                    <td id="kd_nopol">: -</td>
+                                </tr>
+                                <tr>
                                     <td>Keperluan</td>
                                     <td id="kd_kep">: -</td>
                                 </tr>
@@ -393,6 +397,7 @@
                             $('#kd_tgl').text(': '+moment(date).format('DD MMMM YYYY'));
                             $('#kd_name').text(': '+name);
                             $('#kd_tlp').text(': '+no_tlp);
+                            $('#kd_nopol').text(': '+nopol);
                             $('#kd_kep').text(': '+kd_kep);
                             $('#kd_diptgl').text(': '+moment(dtbooking).format('DD MMMM YYYY H:mm:ss'));
                             $('[data-name="save_bukti_booking"]').attr("data-item", kode_qr);
@@ -468,7 +473,14 @@
     }).on('changeDate', function(e) {
         var date        = e.date;
         var currentDate = new Date();
-        if(date < currentDate){
+
+        var inputDate   = new Date(e.date);
+        var today       = new Date();
+        today.setHours(0, 0, 0, 0);
+        var yesterday   = new Date(today);
+        yesterday.setDate(today.getDate() - 1);
+
+        if(inputDate <= yesterday){
             Swal.fire({
                 position:'center',
                 title: 'You select a past date!',

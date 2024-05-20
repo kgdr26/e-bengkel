@@ -4403,10 +4403,10 @@ fieldset:disabled .btn {
 
 .btn-success {
     --fc-btn-color: #fff;
-    --fc-btn-bg: #e61b33;
-    --fc-btn-border-color: #e61b33;
+    --fc-btn-bg: #146c43;
+    --fc-btn-border-color: #146c43;
     --fc-btn-hover-color: #fff;
-    --fc-btn-hover-bg: #157347;
+    --fc-btn-hover-bg: #30ad73;
     --fc-btn-hover-border-color: #146c43;
     --fc-btn-focus-shadow-rgb: 60, 153, 110;
     --fc-btn-active-color: #fff;
@@ -4414,8 +4414,8 @@ fieldset:disabled .btn {
     --fc-btn-active-border-color: #13653f;
     --fc-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
     --fc-btn-disabled-color: #fff;
-    --fc-btn-disabled-bg: #e61b33;
-    --fc-btn-disabled-border-color: #e61b33
+    --fc-btn-disabled-bg: #146c43;
+    --fc-btn-disabled-border-color: #146c43
 }
 
 .btn-info {
