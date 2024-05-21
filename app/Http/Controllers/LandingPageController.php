@@ -37,7 +37,7 @@ class LandingPageController extends Controller
         $kep    = DB::table('mst_keperluan')->where('id', $id_kep)->first();
         $kd_kep = $kep->name;
 
-        $qrname = str_replace("-","",$data).sprintf("%09d", $jml);
+        $qrname = str_replace("-","",$data).sprintf("%05d", $jml);
         $qrCode = QrCode::size(300)->generate($qrname);
         $filePath = 'assets/qrbooking/'.$qrname.'.svg';
         file_put_contents(public_path($filePath), $qrCode);

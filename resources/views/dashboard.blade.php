@@ -16,6 +16,40 @@
         <link href="{{asset('assets/libs/simplebar/dist/simplebar.min.css')}}" rel="stylesheet">
         <!-- Theme CSS -->
         <link rel="stylesheet" href="{{asset('assets/css/theme.min.css')}}">
+        <style>
+            /* Preloader */
+            .preload-wrapper {
+            z-index: 9999999999;
+            position: fixed;
+            top: 45%;
+            left: 45%;
+            right: 0rem;
+            bottom: 0;
+            background: transparent;
+            overflow: hidden;
+            width: 10rem;
+            height: 10rem;
+            display: none;
+            }
+
+            .spinner-border {
+            display: inline-block;
+            width: 10rem;
+            height: 10rem;
+            vertical-align: -.125em;
+            border: 1rem solid #012970;
+            border-right-color: transparent;
+            border-radius: 50%;
+            -webkit-animation: .75s linear infinite spinner-border;
+            animation: .75s linear infinite spinner-border;
+            }
+
+            .action-input{
+            cursor: pointer;
+            }
+
+            /* end Pre loader */
+        </style>
         <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-M8S4MT3EYG"></script>
@@ -34,6 +68,7 @@
         <link href="{{asset('assets/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
         <script src="{{asset('assets/datatables/jquery.dataTables.min.js')}}"></script>
         <script src="{{asset('assets/datatables/dataTables.bootstrap4.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/html5-qrcode.min.js')}}"></script>
         <script>
             $.ajaxSetup({
                 headers: {
@@ -41,9 +76,31 @@
                 }
             });
         </script>
+        <script>
+            $(document).ready(function(){
+                var url      = window.location.href;
+                var urlsplit = url.split('/');
+                var urlget   = urlsplit[3];
+                $(document).ajaxStart(function(){
+                    if(urlget.includes("controlprosess") != true){
+                        $(".preload-wrapper").css("display", "block");
+                    }
+                });
+                $(document).ajaxComplete(function(){
+                    if(urlget.includes("controlprosess") != true){
+                        $(".preload-wrapper").css("display", "none");
+                    }
+                });
+            });
+        </script>
     </head>
 
     <body>
+        <div class="preload-wrapper">
+            <div class="spinner-border text-danger" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
         <!-- main -->
         <div>
             @include('Dashboard.Template.header')

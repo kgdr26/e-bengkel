@@ -89,3 +89,17 @@
   }
   
   /* end Pre loader */
+
+  .card-cam{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.card-cam canvas{
+    width: 70%;
+    height: auto;
+    border-radius: 0.3rem;
+    border: 1px solid #C86060;
+}

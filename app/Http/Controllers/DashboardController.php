@@ -82,11 +82,32 @@ class DashboardController extends Controller
         return view('Dashboard.listbooking')->with($data);
     }
 
-    function actionbooking(){
-        
+    function actionbooking(Request $request){
+        $id     = $request['id'];
+        $arr    = DB::table('trx_booking')->where('id', $id)->first();
+        if($arr){
+            $dt['name']         = $arr->name;
+            $dt['no_tlp']       = $arr->no_tlp;
+            $dt['nopol']        = $arr->nopol;
+            $dt['keperluan']    = $arr->keperluan;
+            $dt['kode_qr']      = $arr->kode_qr;
+            $dt['date']         = $arr->date;
+            $dt['date_booking'] = $arr->date_booking;
+        }else{
+            $dt['name']         = '-';
+            $dt['no_tlp']       = '-';
+            $dt['nopol']        = '-';
+            $dt['keperluan']    = '-';
+            $dt['kode_qr']      = '-';
+            $dt['date']         = '-';
+            $dt['date_booking'] = '-';
+        }
+
+
         $data = array(
-            'title' => 'List Data Booking',
-            'idnusr' => $this->idnusr(),
+            'title'     => 'List Data Booking',
+            'idnusr'    => $this->idnusr(),
+            'dt'        => $dt
         );
 
         return view('Dashboard.actionbooking')->with($data);

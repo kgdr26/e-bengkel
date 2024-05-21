@@ -99,7 +99,6 @@
         </script>
     </head>
     <body>
-
         <div class="preload-wrapper">
             <div class="spinner-border text-danger" role="status">
                 <span class="visually-hidden">Loading...</span>
