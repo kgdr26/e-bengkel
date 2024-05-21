@@ -50,14 +50,6 @@
                                     </p>
                                 </div>
                             </div>
-                            <!-- address -->
-                            <div class="col-lg-4 col-md-4 col-12">
-                                <div class="mb-6">
-                                    <h6>Keperluan</h6>
-                                    <p class="mb-1 lh-lg">{{$dt['keperluan']}}</p>
-                                </div>
-                            </div>
-                            <!-- address -->
                             <div class="col-lg-4 col-md-4 col-12">
                                 <div class="mb-6">
                                     <h6>Order Details</h6>
@@ -66,6 +58,18 @@
                                         Date Booking : <span class="text-dark">{{$dt['date']}}</span><br>
                                         Date Create Booking : <span class="text-dark">{{$dt['date_booking']}}</span>
                                     </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="mb-6">
+                                    <h6>Keperluan</h6>
+                                    @if($dt['keperluan'] == 1)
+                                        <p class="mb-1 lh-lg">Services</p>
+                                    @elseif($dt['keperluan'] == 2)
+                                        <p class="mb-1 lh-lg">Pergantian Sparepart</p>
+                                    @else
+                                        <p class="mb-1 lh-lg">-</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -130,7 +134,7 @@
                     </div>
                     <div class="col-12 mb-3">
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-info me-3" data-name=""><i class="bi bi-plus-circle-fill"></i> ADD</button>
+                            <button type="button" class="btn btn-info me-3" data-name="add_keperluan"><i class="bi bi-plus-circle-fill"></i> ADD</button>
                             <button type="button" class="btn btn-success" data-name=""><i class="bi bi-check2-all"></i> CONFIRMATION</button>
                         </div>
                     </div>
@@ -199,6 +203,45 @@
 </div>
 {{-- End Modal Scane Kode Booking --}}
 
+{{-- Modal Add Keperluan --}}
+<div class="modal fade" id="modal_add_keperluan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card-style">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Select Type</label>
+                        <select data-name="" class="form-select select-2-add">
+                            <option value="">-- Select Type --</option>
+                            <option value="1">Jasa Dll</option>
+                            <option value="2">Sparepart</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="" class="form-label">Jasa Name</label>
+                        <input type="text" class="form-control" data-name="">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="" class="form-label">Price</label>
+                        <input type="text" class="form-control" data-name="">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-name="save_add_keperluan">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- End Modal Add Keperluan --}}
+
 {{-- JS Check Kode Booking --}}
 <script>
     $(document).on("click", "[data-name='submit_kode_booking']", function (e) {
@@ -253,5 +296,24 @@
     });
 </script>
 {{-- End JS Check Kode Booking --}}
+
+{{-- JS Add kwpwrluan --}}
+<script>
+    $(document).on("click", "[data-name='add_keperluan']", function (e) {   
+        $("[data-name='kode_booking']").val('');
+        $("#modal_add_keperluan").modal('show');
+    });
+</script>
+{{-- End JS Add Keperluan --}}
+
+{{-- Select2 --}}
+<script>
+    $(".select-2-add").select2({
+        allowClear: false,
+        width: '100%',
+        dropdownParent: $("#modal_add_keperluan")
+    });
+</script>
+{{-- End Select2 --}}
 
 @stop
