@@ -92,6 +92,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td colspan="5" class="fw-medium text-dark text-center">
+                                            Data Not Available
+                                        </td>
+                                    </tr>
+                                    {{-- <tr>
                                         <td>
                                             <a href="#" class="text-inherit">
                                                 <div class="d-flex align-items-center">
@@ -110,17 +115,15 @@
                                         <td>1</td>
                                         <td>$18.00</td>
                                         <td>Minus</td>
-                                    </tr>
+                                    </tr> --}}
                                     <tr>
                                         <td class="border-bottom-0 pb-0"></td>
                                         <td class="border-bottom-0 pb-0"></td>
                                         <td colspan="1" class="fw-medium text-dark ">
-                                            <!-- text -->
                                             Sub Total :
                                         </td>
                                         <td class="fw-medium text-dark ">
-                                            <!-- text -->
-                                            $80.00
+                                            -
                                         </td>
                                         <td></td>
                                     </tr>
