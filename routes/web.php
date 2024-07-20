@@ -55,6 +55,15 @@ Route::middleware(['auth'])->group(function () {
         // Booking
         Route::get('actionbooking', [DashboardController::class, 'actionbooking'])->name('actionbooking');
         Route::get('listbooking', [DashboardController::class, 'listbooking'])->name('listbooking');
+        Route::post('addkeperluanbooking', [DashboardController::class, 'addkeperluanbooking'])->name('addkeperluanbooking');
+        Route::post('konfirmationkeperluanbooking', [DashboardController::class, 'konfirmationkeperluanbooking'])->name('konfirmationkeperluanbooking');
+
+        Route::get('montir', [DashboardController::class, 'montir'])->name('montir');
+        Route::post('startmontir', [DashboardController::class, 'startmontir'])->name('startmontir');
+        Route::post('endmontir', [DashboardController::class, 'endmontir'])->name('endmontir');
+        Route::post('viewdetailbooking', [DashboardController::class, 'viewdetailbooking'])->name('viewdetailbooking');
+
+
     });
 
 });

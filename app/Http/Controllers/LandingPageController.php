@@ -21,9 +21,11 @@ class LandingPageController extends Controller
 
     function home(){
         $kep    = DB::select("SELECT * FROM mst_keperluan where is_active=1");
+        $sparepart    = DB::select("SELECT * FROM mst_sparepart where is_active=1");
         $data = array(
             'title' => 'Home',
-            'kep'   => $kep
+            'kep'   => $kep,
+            'sparepart' => $sparepart
         );
 
         return view('LandingPage.home')->with($data);

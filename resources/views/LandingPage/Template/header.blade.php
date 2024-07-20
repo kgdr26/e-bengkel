@@ -55,6 +55,8 @@
                                 </svg>
                             </a>
                         </div>
+                            <button type="button" class="btn btn-success btn-sm" data-name="daftar">Daftar</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -97,87 +99,6 @@
                             </span> Booking
                         </button>
                     </div>
-                    {{-- <div class="">
-                        <ul class="navbar-nav align-items-center ">
-                            <li class="nav-item w-100 w-lg-auto">
-                                <a class="nav-link" href="">
-                                    Home
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown w-100 w-lg-auto">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Content 1
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="">Content 1</a></li>
-                                    <li><a class="dropdown-item" href="">Content 2</a></li>
-                                    <li><a class="dropdown-item" href="">Content 3</a></li>
-                                    <li><a class="dropdown-item" href="">Content 4</a></li>
-                                    <li><a class="dropdown-item" href="">Content 5 <span class="badge bg-light-info text-dark-info ms-1">New</span></a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown w-100 w-lg-auto">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Content 2
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="">Content 1</a></li>
-                                    <li><a class="dropdown-item" href="">Content 2</a></li>
-                                    <li><a class="dropdown-item" href="">Content 3</a></li>
-                                    <li><a class="dropdown-item" href="">Content 4</a></li>
-                                    <li><a class="dropdown-item" href="">Content 5 <span class="badge bg-light-info text-dark-info ms-1">New</span></a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown w-100 w-lg-auto">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Content 3
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="">Content 1</a></li>
-                                    <li><a class="dropdown-item" href="">Content 2</a></li>
-                                    <li><a class="dropdown-item" href="">Content 3</a></li>
-                                    <li><a class="dropdown-item" href="">Content 4</a></li>
-                                    <li><a class="dropdown-item" href="">Content 5 <span class="badge bg-light-info text-dark-info ms-1">New</span></a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown w-100 w-lg-auto">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Content 4
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="">Content 1</a></li>
-                                    <li><a class="dropdown-item" href="">Content 2</a></li>
-                                    <li><a class="dropdown-item" href="">Content 3</a></li>
-                                    <li><a class="dropdown-item" href="">Content 4</a></li>
-                                    <li><a class="dropdown-item" href="">Content 5 <span class="badge bg-light-info text-dark-info ms-1">New</span></a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown w-100 w-lg-auto">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Content 5
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="">Content 1</a></li>
-                                    <li><a class="dropdown-item" href="">Content 2</a></li>
-                                    <li><a class="dropdown-item" href="">Content 3</a></li>
-                                    <li><a class="dropdown-item" href="">Content 4</a></li>
-                                    <li><a class="dropdown-item" href="">Content 5 <span class="badge bg-light-info text-dark-info ms-1">New</span></a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown w-100 w-lg-auto">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Content 6
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="">Content 1</a></li>
-                                    <li><a class="dropdown-item" href="">Content 2</a></li>
-                                    <li><a class="dropdown-item" href="">Content 3</a></li>
-                                    <li><a class="dropdown-item" href="">Content 4</a></li>
-                                    <li><a class="dropdown-item" href="">Content 5 <span class="badge bg-light-info text-dark-info ms-1">New</span></a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div> --}}
                 </div>
             </div>
         </div>
@@ -327,6 +248,53 @@
 </div>
 <!-- End Modal Show QR Booking -->
 
+{{-- Modal Daftar --}}
+<div class="modal fade" id="modal_daftar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Daftar User</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card-style">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="" placeholder="Name" data-name="name_daftar">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">No TLP</label>
+                                <input type="text" class="form-control" id="" placeholder="No TLP" data-name="no_tlp_daftar">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="" placeholder="Email" data-name="email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="" placeholder="Username" data-name="username">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="" placeholder="Password" data-name="password">
+                                <input type="hidden" id="add_name_foto" data-name="foto">
+                                <input type="hidden" data-name="role_id" value="4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-name="save_daftar">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- End Modal Daftar --}}
+
 {{-- JS Booking --}}
 <script>
     $(document).on("click", "[data-name='booking']", function (e) {
@@ -405,7 +373,7 @@
                             $("#booking").modal('hide');
                             $("#showqrbooking").modal('show');
                             $(".preload-wrapper").css("display", "none");
-                        },            
+                        },
                         error: function (dat) {
                             Swal.fire({
                                 position:'center',
@@ -419,7 +387,7 @@
                         }
                     });
 
-                },            
+                },
                 error: function (dat) {
                     Swal.fire({
                         position:'center',
@@ -494,3 +462,90 @@
     });
 </script>
 {{-- End JS Datepicker --}}
+
+{{-- JS Daftar --}}
+<script>
+    $(document).on("click", "[data-name='daftar']", function (e) {
+        $("[data-name='name_daftar']").val('');
+        $("[data-name='no_tlp_daftar']").val('');
+        $("[data-name='email']").val('');
+        $("[data-name='username']").val('');
+        $("[data-name='password']").val('');
+        $("[data-name='foto']").val('');
+        $("#modal_daftar").modal('show');
+    });
+
+    $(document).on("click", "[data-name='save_daftar']", function (e) {
+        var name        = $("[data-name='name_daftar']").val();
+        var no_tlp      = $("[data-name='no_tlp_daftar']").val();
+        var email       = $("[data-name='email']").val();
+        var username    = $("[data-name='username']").val();
+        var password    = $("[data-name='password']").val();
+        var role_id     = $("[data-name='role_id']").val();
+        var foto        = $("[data-name='foto']").val();
+        var is_active   = 1;
+        var status      = 0;
+        var update_by   = 1;
+        var table       = "users";
+        if(foto === ''){
+            var foto    = 'default.jpg';
+        }else{
+            var foto    = $("[data-name='foto']").val();
+        }
+
+        var data = {
+                name:name,
+                no_tlp:no_tlp,
+                email:email,
+                username:username,
+                password:password,
+                role_id:role_id,
+                foto:foto,
+                is_active: is_active,
+                status:status,
+                update_by: update_by
+            };
+
+        if (name === '' || no_tlp === '' || email === '' || username === '' || password === '' || role_id === '') {
+            Swal.fire({
+                position:'center',
+                title: 'Form is empty!',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 1000
+            })
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "{{ route('actionadd') }}",
+                data: {table: table, data: data},
+                cache: false,
+                success: function(data) {
+                    // console.log(data);
+                    Swal.fire({
+                        position:'center',
+                        title: 'Success!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((data) => {
+                        location.reload();
+                    })
+                },
+                error: function (data) {
+                    Swal.fire({
+                        position:'center',
+                        title: 'Action Not Valid!',
+                        icon: 'warning',
+                        showConfirmButton: true,
+                        // timer: 1500
+                    }).then((data) => {
+                        // location.reload();
+                    })
+                }
+            });
+        }
+
+    });
+</script>
+{{-- JS Daftar --}}

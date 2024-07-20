@@ -62,9 +62,9 @@
                                             @elseif($value->status == 2)
                                                 <span class="badge bg-light-primary text-dark-primary">Confirmation</span>
                                             @elseif($value->status == 3)
-                                                <span class="badge bg-light-info text-dark-info">Processing</span>
+                                                <span class="badge bg-light-info text-dark-info">On Progress</span>
                                             @elseif($value->status == 4)
-                                                <span class="badge bg-light-success text-dark-success">Finished</span>
+                                                <span class="badge bg-light-success text-dark-success">Close</span>
                                             @else
                                                 <span class="badge bg-light-warning text-dark-warning">Booking</span>
                                             @endif

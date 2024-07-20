@@ -25,10 +25,22 @@ class DashboardController extends Controller
     }
 
     function dasbor(){
-        
+        if(auth::user()->role_id == 4){
+            $arr    = DB::table('trx_booking')->select('trx_booking.*', 'mst_keperluan.name AS kep_name')
+                ->leftJoin('mst_keperluan', 'mst_keperluan.id', '=', 'trx_booking.keperluan')
+                ->orderBy('trx_booking.date_booking', 'desc')
+                ->where('trx_booking.no_tlp', auth::user()->no_tlp)->get();
+        }else{
+            $arr    = DB::table('trx_booking')->select('trx_booking.*', 'mst_keperluan.name AS kep_name')
+                ->leftJoin('mst_keperluan', 'mst_keperluan.id', '=', 'trx_booking.keperluan')
+                ->orderBy('trx_booking.date_booking', 'desc')->get();
+        }
+        $kep    = DB::select("SELECT * FROM mst_keperluan where is_active=1");
         $data = array(
             'title' => 'Dasbor',
             'idnusr' => $this->idnusr(),
+            'arr' => $arr,
+            'kep' => $kep
         );
 
         return view('Dashboard.dasbor')->with($data);
@@ -85,7 +97,9 @@ class DashboardController extends Controller
     function actionbooking(Request $request){
         $id     = $request['id'];
         $arr    = DB::table('trx_booking')->where('id', $id)->first();
+        $part   = DB::table('mst_sparepart')->where('is_active', 1)->get();
         if($arr){
+            $dt['id']         = $arr->id;
             $dt['name']         = $arr->name;
             $dt['no_tlp']       = $arr->no_tlp;
             $dt['nopol']        = $arr->nopol;
@@ -93,7 +107,31 @@ class DashboardController extends Controller
             $dt['kode_qr']      = $arr->kode_qr;
             $dt['date']         = $arr->date;
             $dt['date_booking'] = $arr->date_booking;
+            $dt['status']       = $arr->status;
+
+            $cek    = DB::table('trx_result')->where('id_booking', $id)->get();
+            if(count($cek) == 0){
+                $dt['arr']          = [];
+            }else{
+                $dtarr  = [];
+                $loop   = DB::table('trx_result')->where('id_booking', $id)->first();
+                $arrlop = json_decode($loop->data_result);
+                foreach($arrlop as $key => $val){
+                    if($val->type == '2'){
+                        $prd   = DB::table('mst_sparepart')->where('id', $val->name)->first();
+                        $product    = $prd->name;
+                    }else{
+                        $product    = $val->name;
+                    }
+                    $dtarr[$key]['product'] = $product;
+                    $dtarr[$key]['price'] = $val->price;
+                    $dtarr[$key]['qty'] = $val->qty;
+                    $dtarr[$key]['total'] = intval($val->price)*intval($val->qty);
+                }
+                $dt['arr']  = $dtarr;
+            }
         }else{
+            $dt['id']           = '-';
             $dt['name']         = '-';
             $dt['no_tlp']       = '-';
             $dt['nopol']        = '-';
@@ -101,16 +139,141 @@ class DashboardController extends Controller
             $dt['kode_qr']      = '-';
             $dt['date']         = '-';
             $dt['date_booking'] = '-';
+            $dt['status']       = '-';
+            $dt['arr']          = [];
         }
 
 
         $data = array(
             'title'     => 'List Data Booking',
             'idnusr'    => $this->idnusr(),
-            'dt'        => $dt
+            'dt'        => $dt,
+            'part'      => $part,
+            'id_booking'=> $id
         );
 
         return view('Dashboard.actionbooking')->with($data);
+    }
+
+    function addkeperluanbooking(Request $request){
+        $id_booking     = $request['id_booking'];
+        $type           = $request['type'];
+        $name           = $request['name'];
+        $price          = $request['price'];
+        $qty            = $request['qty'];
+
+        $cek    = DB::table('trx_result')->where('id_booking', $id_booking)->get();
+        if(count($cek) == 0){
+            $result = '';
+            $result .= '{"type":"'.$type.'",';
+            $result .= '"name":"'.$name.'",';
+            $result .= '"price":"'.$price.'",';
+            $result .= '"qty":"'.$qty.'"}';
+
+            $data_result    = '['.$result.']';
+            $data   = array(
+                'id_booking'  => $id_booking,
+                'data_result'   => $data_result
+            );
+            DB::table('trx_result')->insert([$data]);
+        }else{
+            $loop   = DB::table('trx_result')->where('id_booking', $id_booking)->first();
+            $arr    = json_decode($loop->data_result);
+            $list_item = '';
+            foreach($arr as $key => $val){
+                $list_item .= '{"type":"'.$val->type.'",';
+                $list_item .= '"name":"'.$val->name.'",';
+                $list_item .= '"price":"'.$val->price.'",';
+                $list_item .= '"qty":"'.$val->qty.'"},';
+            }
+
+            $list_item .= '{"type":"'.$type.'",';
+            $list_item .= '"name":"'.$name.'",';
+            $list_item .= '"price":"'.$price.'",';
+            $list_item .= '"qty":"'.$qty.'"}';
+
+            $data_result  = '['.$list_item.']';
+
+            $data = array(
+                'data_result'   => $data_result
+            );
+            DB::table('trx_result')->where('id', $loop->id)->update($data);
+        }
+
+        return response('success');
+    }
+
+    function konfirmationkeperluanbooking(Request $request){
+        $id     = $request['id'];
+
+        $data = array(
+            'id_confirmation'   => auth::user()->id,
+            'date_confirmation' => date('Y-m-d H:i:s')
+        );
+        DB::table('trx_result')->where('id_booking', $id)->update($data);
+
+        $data = array(
+            'status'   => 2
+        );
+        DB::table('trx_booking')->where('id', $id)->update($data);
+        return response('success');
+    }
+
+
+    function montir(){
+        $arr    = DB::table('trx_booking')->select('trx_booking.*', 'mst_keperluan.name AS kep_name')
+                ->leftJoin('mst_keperluan', 'mst_keperluan.id', '=', 'trx_booking.keperluan')
+                ->orderBy('trx_booking.date_booking', 'desc')
+                ->whereIn('trx_booking.status', [2,3])->get();
+        $data = array(
+            'title' => 'Montir',
+            'idnusr' => $this->idnusr(),
+            'arr' => $arr
+        );
+
+        return view('Dashboard.montir')->with($data);
+    }
+
+    function startmontir(Request $request){
+        $id     = $request['id'];
+
+        $data = array(
+            'id_montir'   => auth::user()->id,
+            'date_start' => date('Y-m-d H:i:s')
+        );
+        DB::table('trx_result')->where('id_booking', $id)->update($data);
+
+        $data = array(
+            'status'   => 3
+        );
+        DB::table('trx_booking')->where('id', $id)->update($data);
+        return response('success');
+    }
+
+    function endmontir(Request $request){
+        $id     = $request['id'];
+
+        $data = array(
+            'date_end' => date('Y-m-d H:i:s')
+        );
+        DB::table('trx_result')->where('id_booking', $id)->update($data);
+
+        $data = array(
+            'status'   => 4
+        );
+        DB::table('trx_booking')->where('id', $id)->update($data);
+        return response('success');
+    }
+
+    function viewdetailbooking(Request $request){
+        $id     = $request['id'];
+        $arr    = DB::table('trx_booking')->select('trx_booking.*', 'mst_keperluan.name AS kep_name', 'trx_result.date_confirmation', 'trx_result.date_start', 'trx_result.date_end', 'a.name as name_confir', 'b.name as name_montir')
+                ->leftJoin('mst_keperluan', 'mst_keperluan.id', '=', 'trx_booking.keperluan')
+                ->leftJoin('trx_result', 'trx_result.id_booking', '=', 'trx_booking.id')
+                ->leftJoin('users AS a', 'a.id', '=', 'trx_result.id_confirmation')
+                ->leftJoin('users AS b', 'b.id', '=', 'trx_result.id_montir')
+                ->where('trx_booking.id', $id)->first();
+        return response()->json($arr);
     }
 
 
@@ -173,6 +336,7 @@ class DashboardController extends Controller
                 'email'     => $dt['email'],
                 'no_tlp'    => $dt['no_tlp'],
                 'foto'      => $dt['foto'],
+                'status'    => 0,
                 'is_active' => 1,
                 'update_by' => 1,
             );

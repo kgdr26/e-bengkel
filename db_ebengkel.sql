@@ -1,6 +1,6 @@
 /*
-SQLyog Community v13.1.9 (64 bit)
-MySQL - 10.11.4-MariaDB : Database - db_ebengkel
+SQLyog Community v13.2.1 (64 bit)
+MySQL - 10.11.8-MariaDB : Database - db_ebengkel
 *********************************************************************
 */
 
@@ -94,12 +94,12 @@ CREATE TABLE `mst_sparepart` (
   `is_active` int(11) DEFAULT NULL,
   `last_update` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*Data for the table `mst_sparepart` */
 
 insert  into `mst_sparepart`(`id`,`id_category`,`kode_part`,`name`,`support_by`,`image`,`stock`,`price`,`update_by`,`is_active`,`last_update`) values 
-(1,1,'06401K18900','Drive Chain Kit','[\"Verza 150 (2013 - 2018)\",\"CB 150 R (2013 - 2018)\"]','sparepart1.jpg',120,5000,1,1,'2024-04-01 12:27:30'),
+(1,5,'06401K18900','Drive Chain Kit','[\"Verza 150 (2013 - 2018)\",\"CB 150 R (2013 - 2018)\",\"sfdsfdsfdsf\"]','sparepart1.jpg',120,5000,1,1,'2024-05-20 10:07:16'),
 (2,2,'kgdr123','Tes name','[\"Beat\",\"Vario\"]','56820.jpeg',100,0,1,0,'2024-04-01 11:47:50'),
 (3,2,'ghh786667','Tes name tes123','[\"Vario\",\"Beat\",\"CB150R\",\"Tess\"]','80489.jpeg',700,0,1,1,'2024-04-01 15:45:34'),
 (4,5,'53205-K25-900','BATOK A. BEAT PGMI','[\"Beath\",\"CB150R\"]','default.png',100,10000,1,1,'2024-04-01 15:46:06'),
@@ -173,7 +173,8 @@ insert  into `mst_sparepart`(`id`,`id_category`,`kode_part`,`name`,`support_by`,
 (72,5,'51490-GNS-305','SEAL BET FR FORK','[]','default.png',100,10000,1,1,'2024-04-01 11:40:45'),
 (73,5,'90765-229-004','SEAL BOS DPN SEMUA MOTOR','[]','default.png',100,10000,1,1,'2024-04-01 11:40:45'),
 (74,5,'0641-KEH-002','TOP SET MEGAPRO','[]','default.png',100,10000,1,1,'2024-04-01 11:40:45'),
-(75,5,'16970-KPH-902','VAKUM X125','[]','default.png',100,10000,1,1,'2024-04-01 11:40:45');
+(75,5,'16970-KPH-902','VAKUM X125','[]','default.png',100,10000,1,1,'2024-04-01 11:40:45'),
+(76,5,'fgfgsfdg','tesss-123-hhhh','[\"hgjhg\",\"ghjghj\"]','sample.png',90,7000,1,1,'2024-05-20 10:09:04');
 
 /*Table structure for table `trx_booking` */
 
@@ -191,9 +192,33 @@ CREATE TABLE `trx_booking` (
   `kode_qr` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*Data for the table `trx_booking` */
+
+insert  into `trx_booking`(`id`,`name`,`no_tlp`,`nopol`,`merk_kendaraan`,`keperluan`,`date`,`date_booking`,`kode_qr`,`status`) values 
+(1,'Kang Dru','08123344556678','B 3211 KYZ','Honda Beath',1,'2024-05-20','2024-05-20 10:33:41','20240520000000001',1),
+(2,'Badru','089976543321','B 1234 KYZ','CB 150 R',1,'2024-05-21','2024-05-20 16:23:22','20240521000000002',1),
+(3,'adsadsad','55656565656','B 1234 GFT','fdsadfsdfds',1,'2024-05-21','2024-05-20 22:11:03','2024052100003',1),
+(4,'ewdwe','555','4444','sdfsdf',1,'2024-06-11','2024-06-09 21:07:57','2024061100004',1);
+
+/*Table structure for table `trx_result` */
+
+DROP TABLE IF EXISTS `trx_result`;
+
+CREATE TABLE `trx_result` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_booking` int(11) DEFAULT NULL,
+  `id_confirmation` int(11) DEFAULT NULL,
+  `id_montir` int(11) DEFAULT NULL,
+  `data_result` mediumtext DEFAULT NULL,
+  `date_confirmation` datetime DEFAULT NULL,
+  `date_start` datetime DEFAULT NULL,
+  `date_end` datetime DEFAULT NULL,
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+/*Data for the table `trx_result` */
 
 /*Table structure for table `users` */
 
@@ -219,7 +244,7 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert  into `users`(`id`,`username`,`password`,`pass`,`role_id`,`name`,`email`,`no_tlp`,`foto`,`is_active`,`status`,`update_by`,`last_update`) values 
-(1,'kgdr','$2y$10$c3W.UkaWWfqg53Xl7esRT.RckZLC/r2vREKedHl/GroQMIJb2WBvO','1',1,'Kang Dru','kgdr@gmail.com','081211159962','default.jpg',1,1,1,'2024-04-24 14:22:44'),
+(1,'kgdr','$2y$10$c3W.UkaWWfqg53Xl7esRT.RckZLC/r2vREKedHl/GroQMIJb2WBvO','1',1,'Kang Dru','kgdr@gmail.com','081211159962','default.jpg',1,1,1,'2024-05-21 09:42:51'),
 (2,'medi','$2y$10$bMwpEXewYPlWeSQIJZxsWOUH6EEtgUPL.iC566XdepOemCAPUO2dO','1',2,'Medi123','medi@gmail.com','0888877772','default.jpg',1,0,1,'2024-04-23 08:50:16'),
 (3,'555','$2y$10$AcBn6Ovb3Z.mHy2aWQAgN.uSxRxx9eilQxK2AvcjrcbHoYL3m/vfq','5',3,'Test Input ddsdsds','tes@gmailo.com','5555','59495.jpeg',0,0,1,'2024-04-23 08:50:17'),
 (4,'55','$2y$10$FIK0OIRFwGMYzvwQ73KbUOinXptYyeqW7IarIxfuQJOAC01YwQ1re','55555',2,'kang','samsudinteam131022@gmail.com','555555','default.jpg',0,0,1,'2024-04-23 08:50:18'),

@@ -33,8 +33,18 @@
                 <div class="card-body p-6">
                     <div class="d-md-flex justify-content-between">
                         <div class="d-flex align-items-center mb-2 mb-md-0">
-                            <h2 class="mb-0">Booking ID: {{$dt['date_booking']}}</h2>
-                            <span class="badge bg-light-warning text-dark-warning ms-2">Booking</span>
+                            <h2 class="mb-0">Booking ID: {{$dt['kode_qr']}}</h2>
+                            @if ($dt['status'] == 1)
+                                <span class="badge bg-light-warning text-dark-warning ms-2">Booking</span>
+                            @elseif ($dt['status'] == 2)
+                                <span class="badge bg-light-info text-dark-info ms-2">Confirmation</span>
+                            @elseif ($dt['status'] == 3)
+                                <span class="badge bg-light-warning text-dark-warning ms-2">On Progress</span>
+                            @elseif ($dt['status'] == 4)
+                                <span class="badge bg-light-success text-dark-success ms-2">Close</span>
+                            @else
+                                <span class="badge bg-light-warning text-dark-warning ms-2">Booking</span>
+                            @endif
                         </div>
                     </div>
                     <div class="mt-8">
@@ -85,37 +95,39 @@
                                     <tr>
                                         <th>Products</th>
                                         <th>Price</th>
-                                        <th>Quantity</th>
+                                        <th>Qty</th>
                                         <th>Total</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td colspan="5" class="fw-medium text-dark text-center">
-                                            Data Not Available
-                                        </td>
-                                    </tr>
-                                    {{-- <tr>
-                                        <td>
-                                            <a href="#" class="text-inherit">
-                                                <div class="d-flex align-items-center">
-                                                    <div>
-                                                        <img src="{{asset('assets/images/products/default.png')}}" alt=""  class="icon-shape icon-lg">
-                                                    </div>
-                                                    <div class="ms-lg-4 mt-2 mt-lg-0">
-                                                        <h5 class="mb-0 h6">
-                                                            Services
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </td>
-                                        <td><span class="text-body">$18.0</span></td>
-                                        <td>1</td>
-                                        <td>$18.00</td>
-                                        <td>Minus</td>
-                                    </tr> --}}
+                                    @php
+                                        $subtotal = 0;
+                                    @endphp
+                                    @if (count($dt['arr']) == 0)
+                                        <tr>
+                                            <td colspan="5" class="fw-medium text-dark text-center">
+                                                Data Not Available
+                                            </td>
+                                        </tr>
+                                    @else
+                                        @foreach ($dt['arr'] as $key => $val)
+                                            <tr>
+                                                <td class="fw-medium text-dark">{{$val['product']}}</td>
+                                                <td class="fw-medium text-dark">Rp. {{number_format($val['price'], 0, ',', '.')}}</td>
+                                                <td class="fw-medium text-dark">{{$val['qty']}}</td>
+                                                <td class="fw-medium text-dark">Rp. {{number_format($val['total'], 0, ',', '.')}}</td>
+                                                <td class="fw-medium text-dark">
+                                                    <button type="button" class="btn btn-info me-3" data-name="edit_keperluan_booking"><i class="bi bi-pencil-square"></i></button>
+                                                    <button type="button" class="btn btn-danger" data-name="delete_keperluan_booking"><i class="bi bi-trash3-fill"></i></button>
+                                                </td>
+                                                @php
+                                                    $subtotal += $val['total'];
+                                                @endphp
+                                            </tr>
+                                        @endforeach
+                                    @endif
+
                                     <tr>
                                         <td class="border-bottom-0 pb-0"></td>
                                         <td class="border-bottom-0 pb-0"></td>
@@ -123,7 +135,7 @@
                                             Sub Total :
                                         </td>
                                         <td class="fw-medium text-dark ">
-                                            -
+                                            Rp. {{number_format($subtotal, 0, ',', '.')}}
                                         </td>
                                         <td></td>
                                     </tr>
@@ -137,8 +149,13 @@
                     </div>
                     <div class="col-12 mb-3">
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-info me-3" data-name="add_keperluan"><i class="bi bi-plus-circle-fill"></i> ADD</button>
-                            <button type="button" class="btn btn-success" data-name=""><i class="bi bi-check2-all"></i> CONFIRMATION</button>
+                            @if ($dt['status'] == 1 || $dt['status'] == 2)
+                                <button type="button" class="btn btn-info me-3" data-name="add_keperluan"><i class="bi bi-plus-circle-fill"></i> ADD</button>
+                                <button type="button" class="btn btn-success" data-name="confirmation_keperluan" data-item="{{$id_booking}}"><i class="bi bi-check2-all"></i> CONFIRMATION</button>
+                            @else
+                                <button type="button" class="btn btn-info me-3" data-name="add_keperluan" disabled><i class="bi bi-plus-circle-fill"></i> ADD</button>
+                                <button type="button" class="btn btn-success" data-name="" disabled><i class="bi bi-check2-all"></i> CONFIRMATION</button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -216,23 +233,41 @@
             </div>
             <div class="modal-body">
                 <div class="card-style">
-                    <div class="mb-3">
-                        <label for="" class="form-label">Select Type</label>
-                        <select data-name="" class="form-select select-2-add">
-                            <option value="">-- Select Type --</option>
-                            <option value="1">Jasa Dll</option>
-                            <option value="2">Sparepart</option>
-                        </select>
+                    <div id="form_add">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Select Type</label>
+                            <select data-name="type_data" class="form-select select-2-add">
+                                <option value="">-- Select Type --</option>
+                                <option value="1">Jasa Dll</option>
+                                <option value="2">Sparepart</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3" id="select_part" style="display: none">
+                            <label for="" class="form-label">Select Sparepart</label>
+                            <select data-name="id_sparepart" class="form-select select-2-add">
+                                <option value="">-- Select Sparepart --</option>
+                                @foreach ($part as $key => $val)
+                                    <option value="{{$val->id}}">{{$val->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="" class="form-label" data-name="label_jasa_name">Jasa Name</label>
+                            <input type="text" class="form-control" data-name="jasa_name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="" class="form-label">Price</label>
+                            <input type="text" class="form-control" data-name="jasa_price">
+                        </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="" class="form-label">Jasa Name</label>
-                        <input type="text" class="form-control" data-name="">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="" class="form-label">Price</label>
-                        <input type="text" class="form-control" data-name="">
+                        <label for="" class="form-label">Qty</label>
+                        <input type="text" class="form-control" data-name="jasa_qty" value="1">
+                        <input type="hidden" class="form-control" data-name="id_booking" value="{{$id_booking}}">
                     </div>
                 </div>
             </div>
@@ -280,7 +315,7 @@
                         // location.reload();
                     })
                 }
-            },            
+            },
             error: function (data) {
                 Swal.fire({
                     position:'center',
@@ -293,19 +328,187 @@
                 })
             }
         });
-
-
-        $("#modal_submit_kode_booking").modal('show');
     });
 </script>
 {{-- End JS Check Kode Booking --}}
 
 {{-- JS Add kwpwrluan --}}
 <script>
-    $(document).on("click", "[data-name='add_keperluan']", function (e) {   
-        $("[data-name='kode_booking']").val('');
+    function converttorupiah(val){
+        let roundedNumber = Math.round(val * 100) / 100;
+        let rupiah = roundedNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return "Rp. " + rupiah;
+    }
+
+    $("[data-name='jasa_price']").on('keyup', function() {
+        var inputVal = $(this).val();
+        var numberString = inputVal.replace(/[^,\d]/g, '').toString();
+        var split = numberString.split(',');
+        var sisa = split[0].length % 3;
+        var rupiah = split[0].substr(0, sisa);
+        var ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+        if (ribuan) {
+            var separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        $(this).val('Rp. '+rupiah);
+    });
+
+    $(document).on("change", "[data-name='type_data']", function(e) {
+        var type_data   = $("[data-name='type_data']").val();
+
+        if(type_data === '2'){
+            $("[data-name='label_jasa_name']").hide();
+            $('#select_part').show();
+            $("[data-name='jasa_name']").attr('type', 'hidden');
+        }else{
+            $("[data-name='label_jasa_name']").show();
+            $('#select_part').hide();
+            $("[data-name='jasa_name']").attr('type', 'text');
+        }
+    });
+
+    $(document).on("change", "[data-name='id_sparepart']", function(e) {
+        var id      = $("[data-name='id_sparepart']").val();
+        var table   = 'mst_sparepart';
+        var field   =  'id';
+
+        $.ajax({
+            type: "POST",
+            url: "{{route('actionshowdata')}}",
+            data: {id:id,table:table,field:field},
+            cache: false,
+            success: function(data) {
+                console.log(data['data']);
+                if(data['data'] !== null){
+                    var id      = data['data'].id;
+                    $("[data-name='jasa_name']").val(id);
+                    $("[data-name='jasa_price']").val(converttorupiah(data['data'].price));
+                }else{
+                    Swal.fire({
+                        position:'center',
+                        title: 'Data Not Available',
+                        icon: 'warning',
+                        showConfirmButton: true,
+                        // timer: 1500
+                    }).then((data) => {
+                        // location.reload();
+                    })
+                }
+            },
+            error: function (data) {
+                Swal.fire({
+                    position:'center',
+                    title: 'Action Not Valid!',
+                    icon: 'warning',
+                    showConfirmButton: true,
+                    // timer: 1500
+                }).then((data) => {
+                    // location.reload();
+                })
+            }
+        });
+    })
+
+    $(document).on("click", "[data-name='add_keperluan']", function (e) {
+        $('#form_add').find('input[type="text"], textarea').val('');
+        $('#form_add').find('select').prop('selectedIndex', 0);
         $("#modal_add_keperluan").modal('show');
     });
+
+    $(document).on("click", "[data-name='save_add_keperluan']", function (e) {
+        var id_booking  = $("[data-name='id_booking']").val();
+        var type        = $("[data-name='type_data']").val();
+        var name        = $("[data-name='jasa_name']").val();
+        var price_rp    = $("[data-name='jasa_price']").val();
+        var price       = price_rp.replace(/[^0-9]/g, '');
+        var qty         = $("[data-name='jasa_qty']").val();
+
+        if(id_booking === '' || type === '' || name === '' || price === '' || qty === ''){
+            Swal.fire({
+                position:'center',
+                title: 'Action Not Valid!',
+                icon: 'warning',
+                showConfirmButton: true,
+                // timer: 1500
+            }).then((data) => {
+                // location.reload();
+            })
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "{{route('addkeperluanbooking')}}",
+                data: {
+                    id_booking:id_booking,
+                    type:type,
+                    name:name,
+                    price:price,
+                    qty:qty
+                },
+                cache: false,
+                success: function(data) {
+                    $("#modal_add_keperluan").modal('hide');
+                    Swal.fire({
+                        position: 'center',
+                        title: 'Success!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((response) => {
+                        location.reload();
+                    })
+                },
+                error: function (data) {
+                    Swal.fire({
+                        position:'center',
+                        title: 'Action Not Valid!',
+                        icon: 'warning',
+                        showConfirmButton: true,
+                        // timer: 1500
+                    }).then((data) => {
+                        // location.reload();
+                    })
+                }
+            });
+        }
+    });
+
+    $(document).on("click", "[data-name='confirmation_keperluan']", function (e) {
+        var id  = $(this).attr("data-item");
+
+        $.ajax({
+            type: "POST",
+            url: "{{route('konfirmationkeperluanbooking')}}",
+            data: {
+                id:id
+            },
+            cache: false,
+            success: function(data) {
+                Swal.fire({
+                    position: 'center',
+                    title: 'Success!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then((response) => {
+                    location.reload();
+                })
+            },
+            error: function (data) {
+                Swal.fire({
+                    position:'center',
+                    title: 'Action Not Valid!',
+                    icon: 'warning',
+                    showConfirmButton: true,
+                    // timer: 1500
+                }).then((data) => {
+                    // location.reload();
+                })
+            }
+        });
+    });
+
 </script>
 {{-- End JS Add Keperluan --}}
 
